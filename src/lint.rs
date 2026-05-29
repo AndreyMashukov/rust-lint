@@ -82,7 +82,10 @@ impl SourceFile {
             Some(s) => s,
             None => return "",
         };
-        stem.to_str().unwrap_or_default()
+        match stem.to_str() {
+            Some(s) => s,
+            None => "",
+        }
     }
 }
 

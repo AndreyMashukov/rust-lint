@@ -20,5 +20,8 @@ syn = { version = "2", features = ["full", "visit", "extra-traits", "parsing"] }
 toml_edit = "0.22"
 walkdir = "2"
 
+[lints.clippy]
+manual_unwrap_or_default = "allow"
+
 [profile.release]
 strip = true
