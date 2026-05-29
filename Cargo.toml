@@ -1,0 +1,24 @@
+[package]
+name = "rust-lint"
+version = "0.2.0"
+edition = "2021"
+rust-version = "1.74"
+description = "Static analyzers that block the low-signal patterns which bloat Rust code: narrating comments, tautological doc-comments, dead guards, type-only test assertions, runtime env branching, ad-hoc env reads, banal error wrappers, deferred TODOs, and #[allow] lint-silencing."
+license = "MIT"
+repository = "https://github.com/AndreyMashukov/rust-lint"
+readme = "README.md"
+keywords = ["lint", "static-analysis", "ai", "codegen", "ci"]
+categories = ["development-tools"]
+
+[[bin]]
+name = "rust-lint"
+path = "src/main.rs"
+
+[dependencies]
+proc-macro2 = { version = "1", features = ["span-locations"] }
+syn = { version = "2", features = ["full", "visit", "extra-traits", "parsing"] }
+toml_edit = "0.22"
+walkdir = "2"
+
+[profile.release]
+strip = true
