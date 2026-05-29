@@ -64,28 +64,22 @@ impl SourceFile {
         let p = self.path.to_string_lossy().replace('\\', "/");
         p.contains("/tests/")
             || p.starts_with("tests/")
-            || self.file_stem().ends_with("_test")
-            || self.file_stem().starts_with("test_")
+            || self.file_stem().is_some_and(|s| s.ends_with("_test"))
+            || self.file_stem().is_some_and(|s| s.starts_with("test_"))
     }
 
     pub fn is_config_module(&self) -> bool {
         let p = self.path.to_string_lossy().replace('\\', "/");
-        p.contains("/config/") || self.file_stem() == "config" || self.file_stem() == "settings"
+        p.contains("/config/")
+            || matches!(self.file_stem(), Some("config" | "settings"))
     }
 
     pub fn is_clock_module(&self) -> bool {
-        matches!(self.file_stem(), "clock" | "time")
+        matches!(self.file_stem(), Some("clock" | "time"))
     }
 
-    fn file_stem(&self) -> &str {
-        let stem = match self.path.file_stem() {
-            Some(s) => s,
-            None => return "",
-        };
-        match stem.to_str() {
-            Some(s) => s,
-            None => "",
-        }
+    fn file_stem(&self) -> Option<&str> {
+        self.path.file_stem()?.to_str()
     }
 }
 
