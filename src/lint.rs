@@ -70,8 +70,7 @@ impl SourceFile {
 
     pub fn is_config_module(&self) -> bool {
         let p = self.path.to_string_lossy().replace('\\', "/");
-        p.contains("/config/")
-            || matches!(self.file_stem(), Some("config" | "settings"))
+        p.contains("/config/") || matches!(self.file_stem(), Some("config" | "settings"))
     }
 
     pub fn is_clock_module(&self) -> bool {
